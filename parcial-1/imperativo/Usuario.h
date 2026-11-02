@@ -11,7 +11,7 @@
 //            stock estrictamente mayor al del libro más vendido.
 // Precondición: todos los códigos están registrados en la librería, y al
 //               menos un libro tiene ventas mayores a cero.
-// Eficiencia: ?
+// Eficiencia: O(n . N)
 bool todosConMasStockQueElMasVendido(Codigo cs[], int n, Libreria l);
 
 #endif
