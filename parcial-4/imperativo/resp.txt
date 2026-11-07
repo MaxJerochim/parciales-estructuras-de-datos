@@ -1,0 +1,35 @@
+=====================================================================
+ EJERCICIO 6 - Responder justificando.
+=====================================================================
+
+¿Se podría lograr que atender sea O(1) cambiando la representación?
+¿Qué habría que agregar y cómo afectaría a las demás operaciones?
+
+Respuesta:
+
+Con un índice solo no alcanza. Si se agrega un campo "masUrgente" con la
+prioridad no vacía más urgente, atender la encuentra en O(1). Pero cuando
+esa cola se vacía, hay que buscar la siguiente no vacía recorriendo las
+casillas, y eso vuelve a ser O(P) en el peor caso.
+
+Para que atender sea O(1) siempre, se puede agregar una lista enlazada
+(doble) con las prioridades NO vacías, ordenadas de más a menos urgente:
+- atender: toma la primera prioridad de esa lista, O(1), atiende al
+  primero de su cola, O(1), y si la cola quedó vacía saca esa prioridad
+  de la lista, O(1). Total O(1).
+- llegar: si la cola de esa prioridad estaba vacía, hay que insertar la
+  prioridad en la lista ordenada, y para encontrar su lugar hay que
+  recorrerla: pasa de O(1) a O(P) en el peor caso.
+- empeorar: sigue siendo O(N) por la búsqueda del paciente. Además, si
+  la cola i queda vacía hay que sacar i de la lista, y si la cola i-1
+  estaba vacía hay que insertar i-1 justo antes de i (O(1), porque es
+  vecina). No empeora.
+- liberarGuardia: además hay que liberar los nodos de la lista nueva.
+  Sigue siendo O(P + N).
+
+En resumen: se puede, pero el costo se pasa de atender a llegar. Es un
+trade-off, y conviene si se atiende mucho más seguido de lo que llega
+gente a una prioridad vacía.
+
+(Además, si P es una constante fija, por ejemplo 5 niveles de triage,
+O(P) ya es O(1) en la práctica.)
